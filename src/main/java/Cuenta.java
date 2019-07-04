@@ -21,6 +21,44 @@ public class Cuenta {
         this.saldo = cuenta.saldo;
     }
 
+    private boolean isValidMoneyAndBalance(int dinero) {
+        return saldo > 0 && dinero > 0;
+    }
 
+    public boolean ingreso(int dinero) {
+        if (isValidMoneyAndBalance(dinero)){
+            saldo += dinero;
+            return true;
+        }
+        return false;
+    }
 
+    public boolean reintegro(int dinero){
+        if (isValidMoneyAndBalance(dinero)){
+            saldo -= dinero;
+            return true;
+        }
+        return false;
+    }
+
+    public String obtainSaldo() {
+        return "El saldo es: " + this.saldo;
+    }
+
+    public void transferencia(Cuenta destino, int money) {
+        if (this.saldo > money) {
+            destino.ingreso(money);
+            reintegro(money);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Datos de la cuenta{" +
+                "nombre del titular='" + nombre + '\'' +
+                ", numero de cuenta='" + numeroCuenta + '\'' +
+                ", tipo de Interes=" + tipoInteres +
+                ", saldo=" + saldo +
+                '}';
+    }
 }
